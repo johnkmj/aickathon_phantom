@@ -587,21 +587,6 @@ exports.getLob = (req, res, next) => {
   });
 };
 
-/**
- * GET /api/upload
- * File Upload API example.
- */
-
-exports.getFileUpload = (req, res) => {
-  res.render('api/upload', {
-    title: 'File Upload'
-  });
-};
-
-exports.postFileUpload = (req, res) => {
-  req.flash('success', { msg: 'File was uploaded successfully.' });
-  res.redirect('/api/upload');
-};
 
 /**
  * GET /api/pinterest
@@ -658,4 +643,60 @@ exports.getGoogleMaps = (req, res) => {
     title: 'Google Maps API',
     google_map_api_key: process.env.GOOGLE_MAP_API_KEY
   });
+};
+
+//messy coqnitive code
+var API_URL = 'https://fashion.recoqnitics.com/analyze'
+var ACCESS_KEY = '64fe4742fec11da36934'
+var SECRET_KEY = '67e0d64280582bcdb426fc3131bd0c06f2bfdacd'
+//Please edit the parameters above to suit your needs
+
+function uploadPhoto() {
+  var formData = new FormData(document.forms.namedItem('fileinfo'))
+  formData.append('access_key', ACCESS_KEY)
+  formData.append('secret_key', SECRET_KEY)
+
+  // Method 1: pure javascript
+  var xhr = new XMLHttpRequest()
+  xhr.open('POST', API_URL)
+  xhr.onload = () =>
+    xhr.status === 200
+      ? doSomethingWith(JSON.parse(xhr.response))
+      : console.log(xhr.status)
+  xhr.send(formData)
+
+  // Method 2: fetch API
+  fetch(API_URL, {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => response.json())
+    .then(json => doSomethingWith(json))
+
+  // Method 3: axios library
+  axios.post(API_URL, formData).then(response => doSomethingWith(response.data))
+}
+
+function doSomethingWith(data) {
+  // do something with your data here
+  console.log(data)
+}
+
+
+
+/**
+ * GET /api/upload
+ * File Upload API example.
+ */
+
+exports.getFileUpload = (req, res) => {
+  res.render('api/search', {
+    title: 'Image Search'
+  });
+};
+
+exports.postFileUpload = (req, res) => {
+  req.flash('success', { msg: 'File was uploaded successfully. Please wait shortly for the results.' });
+
+  res.redirect('/api/search');
 };

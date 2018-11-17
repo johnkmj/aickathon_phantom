@@ -1,6 +1,8 @@
 const { promisify } = require('util');
 const request = require('request');
 const mongoose = require('mongoose');
+const FormData = require('form-data');
+const fs = require('fs');
 
 var clothingSchema = new mongoose.Schema({
   img: { data: Buffer, contentType: String },
@@ -13,27 +15,23 @@ var clothingSchema = new mongoose.Schema({
 
 var ClothingModel = mongoose.model('Clothing', clothingSchema)
 
-//messy coqnitive code
-var FormData = require('form-data');
-var fs = require('fs');
-var API_URL = 'https://fashion.recoqnitics.com/analyze'
-var ACCESS_KEY = '64fe4742fec11da36934'
-var SECRET_KEY = '67e0d64280582bcdb426fc3131bd0c06f2bfdacd'
-//Please edit the parameters above to suit your needs
 
 function searchPhoto(photo, resHandle) {
   let formdata = {
    filename: fs.createReadStream(photo.path),
-   access_key: ACCESS_KEY,
-   secret_key: SECRET_KEY
+   access_key: process.env.ACCESS_KEY,
+   secret_key: process.env.SECRET_KEY
  }
 
- request.post({ url: API_URL, formData: formdata }, (err, res, body) => {
+ request.post({ url: process.env.API_URL, formData: formdata }, (err, res, body) => {
    parseResults(JSON.parse(res.body), photo, resHandle)
  })
-}
+};
 
 function parseResults(data, photo, resHandle) {
+  // remove the temp search file
+  fs.unlinkSync(photo.path);
+
   var colorArr = []
   data.person.colors.forEach(function(element) {
     colorArr.push(element.colorGeneralCategory)
@@ -63,7 +61,7 @@ function parseResults(data, photo, resHandle) {
       docs: docs.slice(0, 4) //only return top 4
     });
   });
-}
+};
 
 
 function uploadPhoto(photo) {
@@ -71,12 +69,12 @@ function uploadPhoto(photo) {
    filename: fs.createReadStream(photo.path),
    access_key: ACCESS_KEY,
    secret_key: SECRET_KEY
- }
+ };
 
  request.post({ url: API_URL, formData: formdata }, (err, res, body) => {
    uploadGarment(JSON.parse(res.body), photo)
  })
-}
+};
 
 function uploadGarment(data, photo) {
   console.log(data)
@@ -115,7 +113,7 @@ function uploadGarment(data, photo) {
      .catch(err => {
        console.error(err)
      })
-}
+};
 
 function showDatabase(resHandle) {
   ClothingModel.find(function(err, docs) {
@@ -125,7 +123,7 @@ function showDatabase(resHandle) {
       docs
     });
   });
-}
+};
 
 var docs = [{originalname: '', path: '', colors: '', styles: '', garments:''}];
 exports.getFileUpload = (req, res) => {

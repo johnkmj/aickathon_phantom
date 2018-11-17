@@ -19,7 +19,6 @@ const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
-
 const crypto = require('crypto');
 const mime = require('mime');
 
@@ -35,12 +34,10 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 
-// const upload = multer({ dest: path.join(__dirname, 'uploads') });
-
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.load({ path: '.env.example' });
+dotenv.load({ path: '.env' });
 
 /**
  * Controllers (route handlers).
@@ -75,6 +72,7 @@ mongoose.connection.on('error', (err) => {
 /**
  * Express configuration.
  */
+app.use(express.static('./public/uploads'));
 app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
 app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080);
 app.set('views', path.join(__dirname, 'views'));
@@ -162,8 +160,6 @@ app.get('/api/upload', apiController.getAddGarment);
 app.post('/api/upload', upload.single('uploadImage'), apiController.postAddGarment);
 
 app.get('/api/database', apiController.getDatabaseEntries);
-
-app.use(express.static('./public/uploads'));
 
 /**
  * Error Handler.

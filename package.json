@@ -1,12 +1,12 @@
 {
-  "name": "hackathon-starter",
-  "version": "5.1.1",
-  "description": "A boilerplate for Node.js web applications",
+  "name": "aickathon_base",
+  "version": "0.0.1",
+  "description": "The base project for A.Ickathon from team Phantom",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sahat/hackathon-starter.git"
+    "url": "https://github.com/johnkmj/aickathon_phantom"
   },
-  "author": "Sahat Yalkabov",
+  "author": "John Koh",
   "license": "MIT",
   "scripts": {
     "postinstall": "npm rebuild node-sass",

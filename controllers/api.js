@@ -1,39 +1,5 @@
 const { promisify } = require('util');
 const request = require('request');
-const cheerio = require('cheerio');
-const graph = require('fbgraph');
-const { LastFmNode } = require('lastfm');
-const tumblr = require('tumblr.js');
-const GitHub = require('@octokit/rest');
-const Twit = require('twit');
-const stripe = require('stripe')(process.env.STRIPE_SKEY);
-const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
-const Linkedin = require('node-linkedin')(process.env.LINKEDIN_ID, process.env.LINKEDIN_SECRET, process.env.LINKEDIN_CALLBACK_URL);
-const clockwork = require('clockwork')({ key: process.env.CLOCKWORK_KEY });
-const paypal = require('paypal-rest-sdk');
-const lob = require('lob')(process.env.LOB_KEY);
-const ig = require('instagram-node').instagram();
-const { Venues, Users } = require('node-foursquare')({
-  secrets: {
-    clientId: process.env.FOURSQUARE_ID,
-    clientSecret: process.env.FOURSQUARE_SECRET,
-    redirectUrl: process.env.FOURSQUARE_REDIRECT_URL
-  },
-  foursquare: {
-    mode: 'foursquare',
-    version: 20140806,
-  }
-});
-
-/**
- * GET /api
- * List of API examples.
- */
-exports.getApi = (req, res) => {
-  res.render('api/index', {
-    title: 'API Examples'
-  });
-};
 const mongoose = require('mongoose');
 
 var clothingSchema = new mongoose.Schema({
@@ -44,10 +10,7 @@ var clothingSchema = new mongoose.Schema({
   styles: { type: String, text: true },
   garments: { type: String, text: true }
 });
-// db.clothings.createIndex( { colors: "text", styles: "text" , garments: "text"} )
-// db.clothings.find( { $text: { $search: "grey brown black vintage coat" } } )
 
-// clothingSchema.ensureIndex({ colors: "text", sport: "text", favoriteColor: "text" });
 var ClothingModel = mongoose.model('Clothing', clothingSchema)
 
 //messy coqnitive code
@@ -154,11 +117,6 @@ function uploadGarment(data, photo) {
      })
 }
 
-/**
- * GET /api/upload
- * File Upload API example.
- */
-
 var docs = [{originalname: '', path: '', colors: '', styles: '', garments:''}];
 exports.getFileUpload = (req, res) => {
   res.render('api/search', {
@@ -169,9 +127,8 @@ exports.getFileUpload = (req, res) => {
 
 exports.postFileUpload = (req, res, next) => {
   console.log(req.file);
-  searchPhoto(req.file, res)
   req.flash('success', { msg: 'File was uploaded successfully. Please wait shortly for the results.' });
-  // res.redirect('/api/search');
+  searchPhoto(req.file, res)
 };
 
 exports.getAddGarment = (req, res) => {

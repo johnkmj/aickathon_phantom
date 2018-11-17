@@ -2,16 +2,16 @@
 
 We are here to create a solution to reduce solid waste and hence solve the environmental
 crisis problem of toxic chemical usage, water pollution and land fill contribution caused by
-Textile waste.
+textile waste. We're Grab for Fashion!
 
 
 ### How?
 
-By facilitating a clothing donation, exchange, purchase and library through Fit, Fabric and Style.
+By facilitating a clothing donation, exchange, purchase and lending platform while taking in account of Fit, Fabric and Style.
 
 ### What?
 
-A fashion sharing platform that intelligently matches the needs and wants of users with the existing library of garments. smart sorting and categorization upload system that automagically categorizes clothing based on colors, styles, and garments identified using Coqnitics in the image uploaded.
+A fashion sharing platform that intelligently matches the needs and wants of users with the existing library of garments. Features Smart sorting and categorization upload system that automagically categorizes clothing based on colors, styles, and garments identified using [Coqnitics](http://coqnitics.com) in the image uploaded.
 
 ### Who?
 
@@ -43,7 +43,7 @@ Go to http://localhost:8080/ to view the site, and you're good to go.
 
 # Tech used
 
-We're running on the MEAN stack! (Mongodb, Express.js, Angular.js Node.js).
+We're running on the MEAN stack! (Mongodb, Express.js, Angular.js and Node.js).
 
 ### Acknowledgements
 

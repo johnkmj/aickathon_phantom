@@ -48,7 +48,6 @@ dotenv.load({ path: '.env.example' });
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
-const contactController = require('./controllers/contact');
 
 /**
  * API keys and Passport configuration.
@@ -150,28 +149,11 @@ app.get('/reset/:token', userController.getReset);
 app.post('/reset/:token', userController.postReset);
 app.get('/signup', userController.getSignup);
 app.post('/signup', userController.postSignup);
-app.get('/contact', contactController.getContact);
-app.post('/contact', contactController.postContact);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
-
-/**
-* current new routes
-app.post("/api/Upload", function (req, res) {
-    upload(req, res, function (err) {
-        if (err) {
-            return res.end("Something went wrong!");
-        }
-        return res.end("File uploaded sucessfully!.");
-    });
-});
-*/
-
-// app.get('/api/upload', apiController.getFileUpload);
-// app.post('/api/upload', upload.single('myFile'), apiController.postFileUpload);
 
 app.get('/api/search', apiController.getFileUpload);
 app.post('/api/search', upload.single('searchImage'), apiController.postFileUpload);
@@ -179,6 +161,7 @@ app.post('/api/search', upload.single('searchImage'), apiController.postFileUplo
 app.get('/api/upload', apiController.getAddGarment);
 app.post('/api/upload', upload.single('uploadImage'), apiController.postAddGarment);
 
+app.get('/api/database', apiController.getDatabaseEntries);
 
 app.use(express.static('./public/uploads'));
 

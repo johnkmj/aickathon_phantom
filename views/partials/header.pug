@@ -15,8 +15,8 @@
             a.nav-link(href='/api/search') New Clothing Search
           li.nav-item(class=(title === 'Upload New Clothing') ? 'active' : undefined)
             a.nav-link(href='/api/upload') Upload New Clothing
-        li.nav-item(class=(title === 'Contact') ? 'active' : undefined)
-          a.nav-link(href='/contact') Contact
+            li.nav-item(class=(title === 'Clothing Database') ? 'active' : undefined)
+              a.nav-link(href='/api/database') Clothing Database
       ul.nav.navbar-nav.ml-auto
         if !user
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)

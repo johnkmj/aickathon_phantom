@@ -60,7 +60,7 @@ function parseResults(data, photo, resHandle) {
     console.log(docs);
     resHandle.render('api/search', {
       title: 'Image Search',
-      docs
+      docs: docs.slice(0, 4) //only return top 4
     });
   });
 }
@@ -117,6 +117,16 @@ function uploadGarment(data, photo) {
      })
 }
 
+function showDatabase(resHandle) {
+  ClothingModel.find(function(err, docs) {
+    // console.log(docs);
+    resHandle.render('api/database', {
+      title: 'Image Search',
+      docs
+    });
+  });
+}
+
 var docs = [{originalname: '', path: '', colors: '', styles: '', garments:''}];
 exports.getFileUpload = (req, res) => {
   res.render('api/search', {
@@ -127,7 +137,7 @@ exports.getFileUpload = (req, res) => {
 
 exports.postFileUpload = (req, res, next) => {
   console.log(req.file);
-  req.flash('success', { msg: 'File was uploaded successfully. Please wait shortly for the results.' });
+  req.flash('success', { msg: 'File was uploaded successfully. Please wait shortly for the top 4 matches.' });
   searchPhoto(req.file, res)
 };
 
@@ -142,4 +152,9 @@ exports.postAddGarment = (req, res, next) => {
   uploadPhoto(req.file);
   req.flash('success', { msg: 'File was uploaded successfully to the database.' });
   res.redirect('/api/upload');
+};
+
+
+exports.getDatabaseEntries = (req, res) => {
+  showDatabase(res);
 };

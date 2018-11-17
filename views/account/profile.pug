@@ -7,6 +7,10 @@ block content
   form(action='/account/profile', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='score') Sharing Score
+      .col-md-7
+        #{score}
+    .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='email') Email
       .col-md-7
         input.form-control(type='email', name='email', id='email', value=user.email, autocomplete='email')
@@ -30,10 +34,6 @@ block content
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='location') Location
       .col-md-7
         input.form-control(type='text', name='location', id='location', value=user.profile.location, autocomplete)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='website') Website
-      .col-md-7
-        input.form-control(type='text', name='website', id='website', value=user.profile.website, autocomplete='url')
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right Gravatar
       .col-sm-4

@@ -67,11 +67,11 @@ function parseResults(data, photo, resHandle) {
 function uploadPhoto(photo) {
   let formdata = {
    filename: fs.createReadStream(photo.path),
-   access_key: ACCESS_KEY,
-   secret_key: SECRET_KEY
+   access_key: process.env.ACCESS_KEY,
+   secret_key: process.env.SECRET_KEY
  };
 
- request.post({ url: API_URL, formData: formdata }, (err, res, body) => {
+ request.post({ url: process.env.API_URL, formData: formdata }, (err, res, body) => {
    uploadGarment(JSON.parse(res.body), photo)
  })
 };
@@ -148,8 +148,14 @@ exports.getAddGarment = (req, res) => {
 exports.postAddGarment = (req, res, next) => {
   console.log(req.file);
   uploadPhoto(req.file);
-  req.flash('success', { msg: 'File was uploaded successfully to the database.' });
-  res.redirect('/api/upload');
+
+  req.user.score +=1;
+  const user = req.user.save((err) => {
+                if (!err) {
+                    req.flash('success', { msg: 'File was uploaded successfully to the database. You have earned 1 points!' });
+                    res.redirect('/api/upload');
+                }
+            });
 };
 
 

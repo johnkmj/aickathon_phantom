@@ -94,7 +94,8 @@ exports.postSignup = (req, res, next) => {
 
   const user = new User({
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    score: 0
   });
 
   User.findOne({ email: req.body.email }, (err, existingUser) => {
@@ -121,7 +122,8 @@ exports.postSignup = (req, res, next) => {
  */
 exports.getAccount = (req, res) => {
   res.render('account/profile', {
-    title: 'Account Management'
+    title: 'Account Management',
+    score: req.user.score.toString()
   });
 };
 
@@ -288,7 +290,7 @@ exports.postReset = (req, res, next) => {
     const mailOptions = {
       to: user.email,
       from: 'hackathon@starter.com',
-      subject: 'Your YourClothingLibrary password has been changed',
+      subject: 'Your GrabWear password has been changed',
       text: `Hello,\n\nThis is a confirmation that the password for your account ${user.email} has just been changed.\n`
     };
     return transporter.sendMail(mailOptions)
@@ -382,8 +384,8 @@ exports.postForgot = (req, res, next) => {
     });
     const mailOptions = {
       to: user.email,
-      from: 'hackathon@starter.com',
-      subject: 'Reset your password on YourClothingLibrary',
+      from: 'admin@grabwear.com',
+      subject: 'Reset your password on GrabWear',
       text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
         Please click on the following link, or paste this into your browser to complete the process:\n\n
         http://${req.headers.host}/reset/${token}\n\n

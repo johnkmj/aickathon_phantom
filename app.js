@@ -153,13 +153,13 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
-app.get('/api/search', apiController.getFileUpload);
-app.post('/api/search', upload.single('searchImage'), apiController.postFileUpload);
+app.get('/api/search', passportConfig.isAuthenticated, apiController.getFileUpload);
+app.post('/api/search',passportConfig.isAuthenticated, upload.single('searchImage'), apiController.postFileUpload);
 
-app.get('/api/upload', apiController.getAddGarment);
-app.post('/api/upload', upload.single('uploadImage'), apiController.postAddGarment);
+app.get('/api/upload', passportConfig.isAuthenticated, apiController.getAddGarment);
+app.post('/api/upload', passportConfig.isAuthenticated, upload.single('uploadImage'), apiController.postAddGarment);
 
-app.get('/api/database', apiController.getDatabaseEntries);
+app.get('/api/database', passportConfig.isAuthenticated, apiController.getDatabaseEntries);
 
 /**
  * Error Handler.

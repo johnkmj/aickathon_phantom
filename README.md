@@ -23,7 +23,6 @@ Sustainability and accessibility. Economics, ecological, moral impacts in an eng
 
 # Getting Started
 
-
 Installation instructions as follows:
 
 Populate the `.env` file by renaming the `.env.example` file, and fill in your own API keys and setup.
@@ -40,3 +39,12 @@ node app.js
 ```
 
 Go to http://localhost:8080/ to view the site, and you're good to go.
+
+
+# Tech used
+
+We're running on the MEAN stack! (Mongodb, Express.js, Angular.js Node.js).
+
+### Acknowledgements
+
+We're proudly powered by [Coqnitics](http://coqnitics.com)! Built lovingly for Aickathon 2018, here in Johor, Malaysia!
